@@ -50,4 +50,9 @@ public class WarehouseService : IWarehouseService
         var insertedId = await _orderRepository.GetProductWarehouse(product.IdProduct, product.IdWarehouse, product.Amount, price, dateTime);
         return insertedId;
     }
+
+    public async Task<int> AddProductWithProcedure(ProductDTO product)
+    {
+        return await _orderRepository.AddProductWerehouseWithProcedure(product);
+    }
 }

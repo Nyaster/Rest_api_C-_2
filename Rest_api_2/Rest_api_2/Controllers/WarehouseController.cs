@@ -22,12 +22,23 @@ public class WarehouseController : ControllerBase
         {
             var addProduct = await _warehouseService.AddProduct(product);
             return Ok(addProduct);
-        }catch (Exception e)
+        }
+        catch (Exception e)
         {
             return BadRequest(e.Message);
         }
-        
-
-     
+    }
+    [HttpPost("/warehousesProcedure")]
+    public async Task<IActionResult> AddProductWerehouseWithProcedure([FromBody] ProductDTO product)
+    {
+        try
+        {
+            var addProduct = await _warehouseService.AddProductWithProcedure(product);
+            return Ok(addProduct);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }

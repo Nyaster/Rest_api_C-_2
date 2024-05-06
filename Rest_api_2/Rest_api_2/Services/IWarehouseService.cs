@@ -5,4 +5,5 @@ namespace Rest_api_2.Services;
 public interface IWarehouseService
 {
     public Task<int> AddProduct(ProductDTO product);
+    Task<int> AddProductWithProcedure(ProductDTO product);
 }

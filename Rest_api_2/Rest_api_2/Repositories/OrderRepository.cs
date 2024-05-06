@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System.Data;
+using System.Data.SqlClient;
 using Rest_api_2.Models;
 
 namespace Rest_api_2.Repositories;
@@ -200,5 +201,31 @@ public class DBRepository : IDbRepository
             }
         }
         return value;
+    }
+
+    public async Task<int> AddProductWerehouseWithProcedure(ProductDTO product)
+    {
+        decimal returnValue = -1;
+        using var con = new SqlConnection(_connectionString);
+        using var com = new SqlCommand("AddProductToWarehouse", con)
+        {
+            CommandType = CommandType.StoredProcedure
+        };
+        com.Parameters.Add("@idProduct", SqlDbType.Int).Value = product.IdProduct;
+        com.Parameters.Add("@IdWarehouse", SqlDbType.Int).Value = product.IdWarehouse;
+        com.Parameters.Add("@Amount", SqlDbType.Int).Value = product.Amount;
+        com.Parameters.Add("@CreatedAt", SqlDbType.DateTime).Value = product.CreatedAt;
+        await con.OpenAsync();
+        using (var sqlDataReader = await com.ExecuteReaderAsync())
+        {
+            while (await sqlDataReader.ReadAsync())
+            {
+                returnValue = (decimal)sqlDataReader["NewId"];
+            }
+        }
+
+        int val = (int)returnValue;
+
+        return val;
     }
 }

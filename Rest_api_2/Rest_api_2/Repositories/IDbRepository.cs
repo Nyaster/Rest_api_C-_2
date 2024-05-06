@@ -12,4 +12,6 @@ public interface IDbRepository
     Task<int> InsertProductWarehouse(int productIdProduct, int productIdWarehouse, int orderIdOrder, int productAmount, decimal? price, DateTime now);
     Task<int> GetProductWarehouse(int productIdProduct, int productIdWarehouse, int productAmount, decimal? price,
  DateTime dateTime);
+
+    public Task<int> AddProductWerehouseWithProcedure(ProductDTO product);
 }
